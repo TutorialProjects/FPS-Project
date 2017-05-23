@@ -50,7 +50,10 @@ Binaries/*
 Content/StarterContent/*
 Content/FirstPerson
 Content/FirstPersonCPP
+Content/ThirdPerson
+Content/ThirdPersonCPP
 Content/Geometry
+Content/Mannequin
 
 # Builds
 Build/*
