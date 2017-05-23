@@ -1,4 +1,4 @@
-0// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "FPS_Project.h"
 #include "TP_ThirdPerson.h"
