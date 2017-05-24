@@ -22,7 +22,9 @@ EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent & Ow
 	 auto index = BlackboardComp->GetValueAsInt(IndexKey.SelectedKeyName);
 	 if (PatrolPoints[index] == nullptr) { UE_LOG(LogTemp, Warning, TEXT("5: no patrol point[0]")) return EBTNodeResult::Failed; }
 		 BlackboardComp->SetValueAsObject(WaypointKey.SelectedKeyName, PatrolPoints[index]);
-
+		 index += 1;
+		 index %= PatrolPoints.Num();
+		 BlackboardComp->SetValueAsInt(IndexKey.SelectedKeyName, index);
 	 return EBTNodeResult::Succeeded;
 }
 
