@@ -8,12 +8,20 @@
 /**
  * 
  */
+class APatrollingGuard;
 UCLASS()
 class FPS_PROJECT_API UChooseNextWaypoint : public UBTTaskNode
 {
 	GENERATED_BODY()
 		virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	
-	
+	//APatrollingGuard* ControllingPawn;
+protected:
+	UPROPERTY(EditAnywhere,Category ="BLACKBOARD")
+	 FBlackboardKeySelector IndexKey;
+	UPROPERTY(EditAnywhere, Category = "BLACKBOARD")
+		FBlackboardKeySelector WaypointKey;
+
+
+//	TArray<AActor*> PawnWaypointsList;
 	
 };
