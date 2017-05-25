@@ -54,6 +54,7 @@ Content/ThirdPerson
 Content/ThirdPersonCPP
 Content/Geometry
 Content/Mannequin
+Content/AnimStarterPack
 
 # Builds
 Build/*
