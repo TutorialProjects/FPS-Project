@@ -3,7 +3,7 @@
 #include "FPS_Project.h"
 #include "FPS_ProjectGameMode.h"
 #include "FPS_ProjectHUD.h"
-#include "FPS_ProjectCharacter.h"
+#include "Player/FirstPersonCharacter.h"
 
 AFPS_ProjectGameMode::AFPS_ProjectGameMode()
 	: Super()
