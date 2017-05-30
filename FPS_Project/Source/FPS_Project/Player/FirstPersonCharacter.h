@@ -16,11 +16,11 @@ class AFirstPersonCharacter : public ACharacter
 
 	/** Gun mesh: 1st person view (seen only by self) */
 	UPROPERTY(EditAnywhere, Category = Mesh)
-	class USkeletalMeshComponent* FP_Gun;
+	class USkeletalMeshComponent* DEPRECATED_FP_Gun;
 
 	/** Location on gun mesh where projectiles should spawn. */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	class USceneComponent* FP_MuzzleLocation;
+	class USceneComponent* DEPRECATED_FP_MuzzleLocation;
 
 	/** Gun mesh: VR view (attached to the VR controller directly, no arm, just the actual gun) */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
@@ -47,6 +47,7 @@ public:
 
 protected:
 	virtual void BeginPlay();
+	class UInputComponent* ThePlayerInputComponent;
 
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -64,6 +65,12 @@ public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class AFPS_ProjectProjectile> ProjectileClass;
+//////////////////
+	UPROPERTY(EditDefaultsOnly, Category = GUN_CLASS_WHORES)
+	TSubclassOf<class AGun> GunClass;
+
+	class AGun* GunActor;
+////////////////
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
