@@ -16,7 +16,7 @@ AGun::AGun()
 	// Create a gun mesh component
 	FP_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
 	FP_Gun->bCastDynamicShadow = false;
-	FP_Gun->CastShadow = false;
+	FP_Gun->CastShadow = true;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
 	//FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules::KeepRelativeTransform, TEXT("GripPoint"));
 	//	FP_Gun->SetupAttachment(Mesh1P);
