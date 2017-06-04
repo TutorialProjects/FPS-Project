@@ -28,10 +28,12 @@ AWaypointMan::AWaypointMan()
 void AWaypointMan::BeginPlay()
 {
 	Super::BeginPlay();
-	SpringArm->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("HeadPoint"));
-	ChildRef_Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("GripPoint_Rotated"));
+	//SpringArm->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("HeadPoint"));
+	SpringArm->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false), TEXT("HeadPoint"));
+	if(IsPlayerControlled()){ UE_LOG(LogTemp,Warning,TEXT("You are a player. Attaching gun to you cock.")) }
+	ChildRef_Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget,false), TEXT("GripPoint_Rotated"));
 	if (GunActor == nullptr){ GunActor = Cast<AGun>(ChildRef_Gun->GetChildActor()); }
-	if (GunActor != nullptr) { GunActor->AnimInstance = GetMesh()->GetAnimInstance();}
+	if (GunActor != nullptr) { GunActor->AnimInstance3P = GetMesh()->GetAnimInstance();}
 	if (InputComponent != NULL) {
 		InputComponent->BindAction("Fire", IE_Pressed, this, &AWaypointMan::PullTrigger);
 	}
@@ -53,8 +55,16 @@ void AWaypointMan::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
+void AWaypointMan::UnPossessed() {
+	if (IsPlayerControlled()) { UE_LOG(LogTemp, Error, TEXT("You died and got fucked up the ass.")) }
+	Super::UnPossessed();
+
+}
+
 void AWaypointMan::PullTrigger() {
 	if (!GunActor) { return; }
 	GunActor->OnFire();
 
 }
+
+

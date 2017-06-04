@@ -21,6 +21,8 @@ public:
 	UCameraComponent* CameraComp;
 	UFUNCTION(BlueprintCallable)
 		void PullTrigger();
+
+	virtual void UnPossessed() override;
 	//UPROPERTY(EditAnywhere)
 	 AGun* GunActor = nullptr ;
 	// UInputComponent* GrabbedInputComponent;

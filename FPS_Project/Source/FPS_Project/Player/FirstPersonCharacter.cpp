@@ -94,7 +94,7 @@ void AFirstPersonCharacter::BeginPlay()
 	if (GunClass == NULL) { UE_LOG(LogTemp,Warning,TEXT("No Gun Class Type Specified on Gun Class and penis was there too")) return; }
 	GunActor = GetWorld()->SpawnActor<AGun>(GunClass);
 	GunActor->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("GripPoint_Preview"));
-	GunActor->AnimInstance = Mesh1P->GetAnimInstance();
+	GunActor->AnimInstance1P = Mesh1P->GetAnimInstance();
 	if (EnableTouchscreenMovement(ThePlayerInputComponent) == false)
 	{
 		ThePlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFirstPersonCharacter::OnFire);

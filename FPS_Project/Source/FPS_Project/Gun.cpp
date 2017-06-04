@@ -15,7 +15,7 @@ AGun::AGun()
 
 	// Create a gun mesh component
 	FP_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
-	FP_Gun->bCastDynamicShadow = false;
+	FP_Gun->bCastDynamicShadow = true;
 	FP_Gun->CastShadow = true;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
 	//FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules::KeepRelativeTransform, TEXT("GripPoint"));
@@ -43,7 +43,7 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::OnFire()
 {
-	UE_LOG(LogTemp,Warning,TEXT("FUCK ME IN MY ASS!!!!!!!!!!!!!!!!"))
+	//UE_LOG(LogTemp,Warning,TEXT("Gun Actor Fire Called."))
 	// try and fire a projectile
 	if (ProjectileClass != NULL)
 	{
@@ -70,14 +70,13 @@ void AGun::OnFire()
 	}
 
 	// try and play a firing animation if specified
-	if (FireAnimation != NULL)
+	if (FireAnimation3P != NULL && AnimInstance3P != NULL)
 	{
-		// Get the animation object for the arms mesh
-
-		if (AnimInstance != NULL)
-		{
-			AnimInstance->Montage_Play(FireAnimation, 1.f);
-		}
+		AnimInstance3P->Montage_Play(FireAnimation3P, 1.f);
+	}
+	if (FireAnimation1P != NULL && AnimInstance1P != NULL)
+	{
+		AnimInstance1P->Montage_Play(FireAnimation1P, 1.f);
 	}
 	
 }
