@@ -18,7 +18,8 @@ class AFPS_ProjectProjectile : public AActor
 
 public:
 	AFPS_ProjectProjectile();
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ProjectileDamage = 100;
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

@@ -51,15 +51,30 @@ void ATile::PlaceAIPawns(TSubclassOf<APawn> SpawnTypeA, FSpawnCustomizations Spa
 }
 void ATile::PlaceAIPawn(TSubclassOf<APawn> &SpawnTypeA, FSpawnPosition &SpawnPosition, bool FreeForAllMode)
 {
-	APawn* Spawned = GetWorld()->SpawnActor<APawn>(SpawnTypeA);
+	FRotator Rotation = FRotator(0, SpawnPosition.RotationYaw, 0);
+	APawn* Spawned = GetWorld()->SpawnActor<APawn>(SpawnTypeA, SpawnPosition.Location, Rotation);
+	CleanupList.Add(Spawned);
+	if (!Spawned) { return; }
+
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+	Spawned->SpawnDefaultController();
+	if (FreeForAllMode) { Spawned->Tags.Add(FName("PlayerTeam")); }
+					else { Spawned->Tags.Add(FName("Enemy")); }
+}
+
+//void ATile::PlaceActor(TSubclassOf<AActor> SpawnTypeA, FVector SpawnPoint, float RotationYaw, float Scale) {
+void ATile::PlaceActor(TSubclassOf<AActor> SpawnTypeA, FSpawnPosition SpawnPosition) {
+
+
+	//	UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToString())
+	AActor* Spawned = GetWorld()->SpawnActor<AActor>(SpawnTypeA);
+	CleanupList.Add(Spawned);
 	if (!Spawned) { return; }
 	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 	Spawned->SetActorRotation(FRotator(0, SpawnPosition.RotationYaw, 0));
 	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
-	Spawned->SpawnDefaultController();
-	if (FreeForAllMode) { Spawned->Tags.Add(FName("PlayerTeam")); }
-					else { Spawned->Tags.Add(FName("Enemy")); }
 }
 TArray<FSpawnPosition> ATile::RandomSpawnPositions(int32 MinSpawnAmount = 1, int32 MaxSpawnAmount = 20, float OverlapCheckRadius = 300, float MinScale = 1.f, float MaxScale = 1.f)
 {
@@ -95,18 +110,7 @@ bool ATile::FindEmptyLocation(FVector& OutLocation, float CheckRadius) {
 	return false;
 }
 
-//void ATile::PlaceActor(TSubclassOf<AActor> SpawnTypeA, FVector SpawnPoint, float RotationYaw, float Scale) {
-void ATile::PlaceActor(TSubclassOf<AActor> SpawnTypeA, FSpawnPosition SpawnPosition) {
 
-	
-//	UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToString())
-		AActor* Spawned = GetWorld()->SpawnActor<AActor>(SpawnTypeA);
-		if (!Spawned) { return; }
-	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
-	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-	Spawned->SetActorRotation(FRotator(0, SpawnPosition.RotationYaw, 0));
-	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
-}
 
 // Called when the game starts or when spawned
 void ATile::BeginPlay()
@@ -115,7 +119,21 @@ void ATile::BeginPlay()
 
 }
 void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-	NavPool->Return(NavMeshBoundsVolume);
+	if (NavPool && NavMeshBoundsVolume) {
+		NavPool->Return(NavMeshBoundsVolume); 
+	}
+	for (int i = 0; i < CleanupList.Num(); i++) {
+		if (CleanupList[i] != nullptr) {
+			CleanupList[i]->Destroy();
+		}
+	}
+	//for (AActor* ToBeDestroyed : CleanupList)
+	//{
+	//if (ToBeDestroyed != nullptr) {
+		//	ToBeDestroyed->Destroy();
+	//}
+	//}
+	
 
 }
 // Called every frame

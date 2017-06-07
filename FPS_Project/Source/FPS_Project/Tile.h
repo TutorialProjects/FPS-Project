@@ -62,7 +62,7 @@ private:
 
 	AActor* NavMeshBoundsVolume;
 	TArray<FSpawnPosition> RandomSpawnPositions(int32 MinSpawnAmount, int32 MaxSpawnAmount, float OverlapCheckRadius, float MinScale, float MaxScale);
-
+	TArray<AActor*> CleanupList;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -16,9 +16,9 @@ UActorPool::UActorPool()
 
 AActor* UActorPool::Checkout()
 {
-	if (Pool.Num() == 0) { UE_LOG(LogTemp, Error, TEXT("did NOT pop")) return nullptr; }
+	if (ActorList.Num() == 0) { UE_LOG(LogTemp, Error, TEXT("did NOT pop")) return nullptr; }
 	UE_LOG(LogTemp, Error, TEXT("popped"))
-	return Pool.Pop();
+	return ActorList.Pop();
 }
 
 void UActorPool::Return(AActor * ActorToReturn)
@@ -31,5 +31,5 @@ void UActorPool::Return(AActor * ActorToReturn)
 void UActorPool::Add(AActor * ActorToAdd)
 {
 	if (!ActorToAdd) { return; }
-	Pool.Push(ActorToAdd);
+	ActorList.Push(ActorToAdd);
 }

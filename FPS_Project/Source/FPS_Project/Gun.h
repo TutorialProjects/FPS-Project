@@ -39,6 +39,8 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "FIRING")
 	void OnFire();
+	UPROPERTY(EditAnywhere)
+	float Damage = 100;
 protected:
 
 	// Called when the game starts or when spawned

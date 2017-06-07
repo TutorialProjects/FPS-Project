@@ -14,12 +14,13 @@ AInfiniteTerrainGamemode::AInfiniteTerrainGamemode()
 }
 
 void AInfiniteTerrainGamemode::PopulateBoundsVolumePool() {
-	TActorIterator<ANavMeshBoundsVolume> VolumeIterator(GetWorld());
+	TActorIterator<ANavMeshBoundsVolume> VolumeIterator = TActorIterator<ANavMeshBoundsVolume>(GetWorld());
 	while (VolumeIterator)
 	{
 		
 		ANavMeshBoundsVolume* FoundActor = *VolumeIterator;
-		AddToPool(*VolumeIterator);
+		NavMeshPool->Add(*VolumeIterator);
+		//AddToPool(*VolumeIterator);
 			++VolumeIterator;
 	}
 
