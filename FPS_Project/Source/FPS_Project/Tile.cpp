@@ -123,15 +123,15 @@ void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 		NavPool->Return(NavMeshBoundsVolume); 
 	}
 	for (int i = 0; i < CleanupList.Num(); i++) {
-		if (CleanupList[i] != nullptr) {
+		if (CleanupList[i] != NULL) {
 			CleanupList[i]->Destroy();
 		}
 	}
 	//for (AActor* ToBeDestroyed : CleanupList)
-	//{
-	//if (ToBeDestroyed != nullptr) {
-		//	ToBeDestroyed->Destroy();
-	//}
+//	{
+	//	if (ToBeDestroyed != nullptr) {
+	//		ToBeDestroyed->Destroy();
+	//	}
 	//}
 	
 
